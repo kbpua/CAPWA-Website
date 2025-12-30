@@ -107,3 +107,5 @@ export const SymptomChecker: React.FC<SymptomCheckerProps> = ({ onSubmit }) => {
   );
 };
 
+
+
