@@ -19,7 +19,7 @@ export const WelcomePage: React.FC = () => {
             <div className="inline-block mb-6 relative">
               <div className="w-32 h-32 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-2xl ring-4 ring-yellow-300/50">
                 <img 
-                  src="/Logo.png" 
+                  src="/Logo.svg" 
                   alt="CAPWA Logo" 
                   className="w-24 h-24 object-contain"
                   onError={(e) => {
