@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
             <img 
-              src="/Logo.svg" 
+              src="/Logo.png" 
               alt="CAPWA Logo" 
               className="w-12 h-12 object-contain"
               onError={(e) => {

@@ -39,7 +39,7 @@ export const LoginForm: React.FC = () => {
     <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8 border-2 border-green-100">
       <div className="text-center mb-6">
         <img 
-          src="/Logo.svg" 
+          src="/Logo.png" 
           alt="CAPWA Logo" 
           className="w-16 h-16 mx-auto mb-4 object-contain"
           onError={(e) => {
