@@ -18,7 +18,7 @@ function App() {
       <Router>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow page-transition">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />

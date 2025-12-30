@@ -13,17 +13,17 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const baseClasses = 'font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+  const baseClasses = 'font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 min-h-[44px] min-w-[44px] flex items-center justify-center';
   
   const variantClasses = {
-    primary: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 shadow-md hover:shadow-lg',
-    secondary: 'bg-yellow-400 text-green-800 hover:bg-yellow-300 focus:ring-yellow-500 shadow-md hover:shadow-lg font-semibold',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-md hover:shadow-lg',
-    outline: 'border-2 border-green-600 text-green-700 hover:bg-green-50 focus:ring-green-500 bg-white',
+    primary: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 shadow-md hover:shadow-lg hover:scale-105',
+    secondary: 'bg-yellow-400 text-green-800 hover:bg-yellow-300 focus:ring-yellow-500 shadow-md hover:shadow-lg font-semibold hover:scale-105',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-md hover:shadow-lg hover:scale-105',
+    outline: 'border-2 border-green-600 text-green-700 hover:bg-green-50 focus:ring-green-500 bg-white hover:scale-105',
   };
   
   const sizeClasses = {
-    sm: 'px-3 py-1.5 text-sm',
+    sm: 'px-3 py-1.5 text-sm min-h-[36px]',
     md: 'px-4 py-2 text-base',
     lg: 'px-6 py-3 text-lg',
   };
