@@ -48,54 +48,6 @@ export const Header: React.FC = () => {
     { path: '/', label: 'Home', icon: Home },
     { path: '/map', label: 'Report Incident', icon: MapPin },
   ];
-
-  const authLinks = isAuthenticated ? (
-    <>
-      {isAdmin && (
-        <Link
-          to="/admin"
-          className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-200 font-medium ${
-            isActive('/admin')
-              ? 'bg-white text-green-700 shadow-lg scale-105'
-              : 'text-white hover:bg-white/20 hover:scale-105'
-          }`}
-        >
-          <Shield className="w-4 h-4" />
-          <span>Admin</span>
-        </Link>
-      )}
-      <Link
-        to="/profile"
-        className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-200 font-medium ${
-          isActive('/profile')
-            ? 'bg-white text-green-700 shadow-lg scale-105'
-            : 'text-white hover:bg-white/20 hover:scale-105'
-        }`}
-      >
-        <User className="w-4 h-4" />
-        <span>{user?.name || 'Profile'}</span>
-      </Link>
-      <button
-        onClick={handleLogout}
-        className="flex items-center space-x-2 px-4 py-2.5 text-white hover:bg-white/20 rounded-xl transition-all duration-200 font-medium hover:scale-105"
-      >
-        <LogOut className="w-4 h-4" />
-        <span>Logout</span>
-      </button>
-    </>
-  ) : (
-    <Link
-      to="/login"
-      className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-200 font-medium ${
-        isActive('/login')
-          ? 'bg-white text-green-700 shadow-lg scale-105'
-          : 'bg-yellow-400 text-green-800 hover:bg-yellow-300 shadow-md hover:shadow-lg hover:scale-105'
-      }`}
-    >
-      <LogIn className="w-4 h-4" />
-      <span>Login</span>
-    </Link>
-  );
   
   return (
     <>

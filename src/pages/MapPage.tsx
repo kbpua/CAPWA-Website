@@ -18,7 +18,7 @@ export const MapPage: React.FC = () => {
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let ticking = false;
-    let timeoutId: NodeJS.Timeout | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const handleScroll = () => {
       if (!ticking) {
