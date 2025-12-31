@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface ModalProps {
 }
 
 export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 'md' }) => {
+  const { theme } = useTheme();
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -46,18 +48,36 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
 
         {/* Modal */}
         <div
-          className={`relative bg-white rounded-2xl shadow-2xl w-full ${sizeClasses[size]} transform transition-all`}
+          className={`relative rounded-2xl shadow-2xl w-full ${sizeClasses[size]} transform transition-all duration-300`}
+          style={{
+            backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           {title && (
-            <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50 rounded-t-2xl">
-              <h3 className="text-2xl font-bold text-gray-900" id="modal-title">
+            <div 
+              className="flex items-center justify-between px-6 py-5 border-b rounded-t-2xl transition-colors duration-300"
+              style={{
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+                background: theme === 'dark' 
+                  ? 'linear-gradient(to right, #243447, #2d4054)'
+                  : 'linear-gradient(to right, #f0fdf4, #d1fae5)',
+              }}
+            >
+              <h3 
+                className="text-2xl font-bold"
+                style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+                id="modal-title"
+              >
                 {title}
               </h3>
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-2 hover:bg-gray-100"
+                className="transition-colors rounded-lg p-2 hover:bg-opacity-20"
+                style={{
+                  color: theme === 'dark' ? 'var(--text-secondary)' : '#9ca3af',
+                }}
                 aria-label="Close modal"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +89,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
           {!title && (
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors rounded-lg p-2 hover:bg-gray-100 z-10"
+              className="absolute top-4 right-4 transition-colors rounded-lg p-2 z-10"
+              style={{
+                color: theme === 'dark' ? 'var(--text-secondary)' : '#9ca3af',
+              }}
               aria-label="Close modal"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +102,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
           )}
 
           {/* Content */}
-          <div className="px-6 py-6 max-h-[70vh] overflow-y-auto">
+          <div 
+            className="px-6 py-6 max-h-[70vh] overflow-y-auto"
+            style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+          >
             {children}
           </div>
         </div>

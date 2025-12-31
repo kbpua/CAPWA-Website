@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
+import { ThemeToggle } from './ThemeToggle';
 import { Menu, X, Home, MapPin, Shield, User, LogOut, LogIn } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated, user, isAdmin, logout } = useAuth();
+  const { theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
@@ -51,11 +54,17 @@ export const Header: React.FC = () => {
   
   return (
     <>
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-green-100' 
-          : 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-lg'
-      }`}>
+      <header 
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          theme === 'dark'
+            ? scrolled
+              ? 'bg-[#14532d] backdrop-blur-md shadow-lg border-b border-[#1a5f3f]'
+              : 'bg-gradient-to-r from-[#166534] to-[#15803d] shadow-lg'
+            : scrolled 
+              ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-green-100' 
+              : 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-lg'
+        }`}
+      >
         <nav className="container mx-auto px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 md:py-3.5 lg:py-4">
           <div className="flex items-center justify-between gap-2 sm:gap-3">
             {/* Logo */}
@@ -75,12 +84,20 @@ export const Header: React.FC = () => {
               </div>
               <div className="flex flex-col min-w-0">
                 <span className={`text-base sm:text-lg md:text-xl lg:text-2xl font-bold transition-colors duration-300 truncate ${
-                  scrolled ? 'text-green-700' : 'text-white'
+                  theme === 'dark' 
+                    ? 'text-white' 
+                    : scrolled 
+                      ? 'text-green-700' 
+                      : 'text-white'
                 }`}>
                   CAPWA
                 </span>
                 <span className={`text-[9px] sm:text-[10px] md:text-xs lg:text-xs transition-colors duration-300 hidden md:block ${
-                  scrolled ? 'text-green-600' : 'text-green-100'
+                  theme === 'dark' 
+                    ? 'text-green-100' 
+                    : scrolled 
+                      ? 'text-green-600' 
+                      : 'text-green-100'
                 }`}>
                   Community Animals Partners & Welfare Advocates
                 </span>
@@ -96,13 +113,17 @@ export const Header: React.FC = () => {
                     key={link.path}
                     to={link.path}
                     className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
-                      isActive(link.path)
-                        ? scrolled
-                          ? 'bg-green-100 text-green-700 shadow-md'
-                          : 'bg-white text-green-700 shadow-lg'
-                        : scrolled
-                          ? 'text-green-700 hover:bg-green-50'
-                          : 'text-white hover:bg-white/20'
+                      theme === 'dark'
+                        ? isActive(link.path)
+                          ? 'bg-[#6b8e23] text-white shadow-md'
+                          : 'text-white hover:bg-white/10'
+                        : isActive(link.path)
+                          ? scrolled
+                            ? 'bg-green-100 text-green-700 shadow-md'
+                            : 'bg-white text-green-700 shadow-lg'
+                          : scrolled
+                            ? 'text-green-700 hover:bg-green-50'
+                            : 'text-white hover:bg-white/20'
                     } hover:scale-105`}
                   >
                     <Icon className="w-4 h-4 flex-shrink-0" />
@@ -111,19 +132,25 @@ export const Header: React.FC = () => {
                 );
               })}
               <div className="flex items-center space-x-1.5 xl:space-x-2">
+                {/* Theme Toggle */}
+                <ThemeToggle />
                 {isAuthenticated ? (
                   <>
                     {isAdmin && (
                       <Link
                         to="/admin"
                         className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
-                          isActive('/admin')
-                            ? scrolled
-                              ? 'bg-green-100 text-green-700 shadow-md'
-                              : 'bg-white text-green-700 shadow-lg'
-                            : scrolled
-                              ? 'text-green-700 hover:bg-green-50'
-                              : 'text-white hover:bg-white/20'
+                          theme === 'dark'
+                            ? isActive('/admin')
+                              ? 'bg-[#6b8e23] text-white shadow-md'
+                              : 'text-white hover:bg-white/10'
+                            : isActive('/admin')
+                              ? scrolled
+                                ? 'bg-green-100 text-green-700 shadow-md'
+                                : 'bg-white text-green-700 shadow-lg'
+                              : scrolled
+                                ? 'text-green-700 hover:bg-green-50'
+                                : 'text-white hover:bg-white/20'
                         } hover:scale-105`}
                       >
                         <Shield className="w-4 h-4 flex-shrink-0" />
@@ -133,13 +160,17 @@ export const Header: React.FC = () => {
                     <Link
                       to="/profile"
                       className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
-                        isActive('/profile')
-                          ? scrolled
-                            ? 'bg-green-100 text-green-700 shadow-md'
-                            : 'bg-white text-green-700 shadow-lg'
-                          : scrolled
-                            ? 'text-green-700 hover:bg-green-50'
-                            : 'text-white hover:bg-white/20'
+                        theme === 'dark'
+                          ? isActive('/profile')
+                            ? 'bg-[#6b8e23] text-white shadow-md'
+                            : 'text-white hover:bg-white/10'
+                          : isActive('/profile')
+                            ? scrolled
+                              ? 'bg-green-100 text-green-700 shadow-md'
+                              : 'bg-white text-green-700 shadow-lg'
+                            : scrolled
+                              ? 'text-green-700 hover:bg-green-50'
+                              : 'text-white hover:bg-white/20'
                       } hover:scale-105`}
                     >
                       <User className="w-4 h-4 flex-shrink-0" />
@@ -148,9 +179,11 @@ export const Header: React.FC = () => {
                     <button
                       onClick={handleLogout}
                       className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
-                        scrolled
-                          ? 'text-green-700 hover:bg-green-50'
-                          : 'text-white hover:bg-white/20'
+                        theme === 'dark'
+                          ? 'text-white hover:bg-white/10'
+                          : scrolled
+                            ? 'text-green-700 hover:bg-green-50'
+                            : 'text-white hover:bg-white/20'
                       } hover:scale-105`}
                     >
                       <LogOut className="w-4 h-4 flex-shrink-0" />
@@ -161,11 +194,15 @@ export const Header: React.FC = () => {
                   <Link
                     to="/login"
                     className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
-                      isActive('/login')
-                        ? scrolled
-                          ? 'bg-green-100 text-green-700 shadow-md'
-                          : 'bg-white text-green-700 shadow-lg'
-                        : 'bg-yellow-400 text-green-800 hover:bg-yellow-300 shadow-md hover:shadow-lg'
+                      theme === 'dark'
+                        ? isActive('/login')
+                          ? 'bg-[#6b8e23] text-white shadow-md'
+                          : 'bg-yellow-500 text-[#1a2332] hover:bg-yellow-400 shadow-md hover:shadow-lg'
+                        : isActive('/login')
+                          ? scrolled
+                            ? 'bg-green-100 text-green-700 shadow-md'
+                            : 'bg-white text-green-700 shadow-lg'
+                          : 'bg-yellow-400 text-green-800 hover:bg-yellow-300 shadow-md hover:shadow-lg'
                     } hover:scale-105`}
                   >
                     <LogIn className="w-4 h-4 flex-shrink-0" />
@@ -220,13 +257,17 @@ export const Header: React.FC = () => {
                   <Link
                     to="/profile"
                     className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
-                      isActive('/profile')
-                        ? scrolled
-                          ? 'bg-green-100 text-green-700 shadow-md'
-                          : 'bg-white text-green-700 shadow-lg'
-                        : scrolled
-                          ? 'text-green-700 hover:bg-green-50'
-                          : 'text-white hover:bg-white/20'
+                      theme === 'dark'
+                        ? isActive('/profile')
+                          ? 'bg-[#6b8e23] text-white shadow-md'
+                          : 'text-white hover:bg-white/10'
+                        : isActive('/profile')
+                          ? scrolled
+                            ? 'bg-green-100 text-green-700 shadow-md'
+                            : 'bg-white text-green-700 shadow-lg'
+                          : scrolled
+                            ? 'text-green-700 hover:bg-green-50'
+                            : 'text-white hover:bg-white/20'
                     } hover:scale-105`}
                     title={user?.name || 'Profile'}
                   >
@@ -235,9 +276,11 @@ export const Header: React.FC = () => {
                   <button
                     onClick={handleLogout}
                     className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
-                      scrolled
-                        ? 'text-green-700 hover:bg-green-50'
-                        : 'text-white hover:bg-white/20'
+                      theme === 'dark'
+                        ? 'text-white hover:bg-white/10'
+                        : scrolled
+                          ? 'text-green-700 hover:bg-green-50'
+                          : 'text-white hover:bg-white/20'
                     } hover:scale-105`}
                     title="Logout"
                   >
@@ -247,7 +290,11 @@ export const Header: React.FC = () => {
               ) : (
                 <Link
                   to="/login"
-                  className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm bg-yellow-400 text-green-800 hover:bg-yellow-300 shadow-md hover:shadow-lg hover:scale-105`}
+                  className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm shadow-md hover:shadow-lg hover:scale-105 ${
+                    theme === 'dark'
+                      ? 'bg-yellow-500 text-[#1a2332] hover:bg-yellow-400'
+                      : 'bg-yellow-400 text-green-800 hover:bg-yellow-300'
+                  }`}
                   title="Login"
                 >
                   <LogIn className="w-4 h-4" />
@@ -333,6 +380,14 @@ export const Header: React.FC = () => {
               );
             })}
             
+            {/* Theme Toggle in Mobile Menu */}
+            <div className="pt-4 border-t border-gray-200 mt-4 mb-4">
+              <div className="flex items-center justify-between px-4 py-3">
+                <span className="text-gray-700 font-medium">Theme</span>
+                <ThemeToggle />
+              </div>
+            </div>
+            
             <div className="pt-4 border-t border-gray-200 mt-4">
               {isAuthenticated ? (
                 <>
@@ -354,9 +409,13 @@ export const Header: React.FC = () => {
                     to="/profile"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
-                      isActive('/profile')
-                        ? 'bg-green-100 text-green-700 shadow-md'
-                        : 'text-gray-700 hover:bg-gray-100'
+                      theme === 'dark'
+                        ? isActive('/profile')
+                          ? 'bg-[#6b8e23] text-white shadow-md'
+                          : 'text-white hover:bg-white/10'
+                        : isActive('/profile')
+                          ? 'bg-green-100 text-green-700 shadow-md'
+                          : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
                     <User className="w-5 h-5" />
@@ -364,7 +423,11 @@ export const Header: React.FC = () => {
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium text-red-600 hover:bg-red-50"
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
+                      theme === 'dark'
+                        ? 'text-red-400 hover:bg-red-500/20'
+                        : 'text-red-600 hover:bg-red-50'
+                    }`}
                   >
                     <LogOut className="w-5 h-5" />
                     <span>Logout</span>
@@ -374,7 +437,11 @@ export const Header: React.FC = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium bg-yellow-400 text-green-800 hover:bg-yellow-300 shadow-md"
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium shadow-md ${
+                    theme === 'dark'
+                      ? 'bg-yellow-500 text-[#1a2332] hover:bg-yellow-400'
+                      : 'bg-yellow-400 text-green-800 hover:bg-yellow-300'
+                  }`}
                 >
                   <LogIn className="w-5 h-5" />
                   <span>Login</span>

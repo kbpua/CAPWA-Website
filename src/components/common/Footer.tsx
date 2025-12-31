@@ -3,13 +3,21 @@ import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
 import { getEmergencyContacts } from '../../utils/emergencyContacts';
 import { useAuth } from '../auth/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const Footer: React.FC = () => {
   const emergencyContacts = getEmergencyContacts().slice(0, 3);
   const { isAuthenticated } = useAuth();
+  const { theme } = useTheme();
 
   return (
-    <footer className="bg-gradient-to-r from-green-700 to-emerald-700 text-white mt-auto">
+    <footer 
+      className={`text-white mt-auto transition-colors duration-300 ${
+        theme === 'dark'
+          ? 'bg-gradient-to-r from-[#14532d] to-[#166534]'
+          : 'bg-gradient-to-r from-green-700 to-emerald-700'
+      }`}
+    >
       <div className="container mx-auto px-4 py-8 md:py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-6 md:mb-8">
           <div>
@@ -141,11 +149,16 @@ export const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="border-t border-green-600 pt-4 md:pt-6 text-center">
-          <p className="text-green-200 text-xs md:text-sm">
+        <div 
+          className="border-t pt-4 md:pt-6 text-center transition-colors duration-300"
+          style={{
+            borderColor: theme === 'dark' ? '#6b8e23' : '#16a34a',
+          }}
+        >
+          <p className="text-white/80 text-xs md:text-sm">
             &copy; {new Date().getFullYear()} CAPWA - Community Animals Partners & Welfare Advocates. All rights reserved.
           </p>
-          <p className="text-xs md:text-sm text-green-300 mt-2">
+          <p className="text-xs md:text-sm text-white/90 mt-2">
             Made with 💚 for animals in the Philippines
           </p>
         </div>

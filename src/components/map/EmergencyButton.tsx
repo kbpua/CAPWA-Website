@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { reportService } from '../../services/reportService';
 import { useAuth } from '../../hooks/useAuth';
 import { useLocation } from '../../hooks/useLocation';
+import { useTheme } from '../../contexts/ThemeContext';
 import { Modal } from '../common/Modal';
 import { getEmergencyContacts } from '../../utils/emergencyContacts';
 import toast from 'react-hot-toast';
@@ -12,6 +13,7 @@ interface EmergencyButtonProps {
 }
 
 export const EmergencyButton: React.FC<EmergencyButtonProps> = ({ onModalStateChange }) => {
+  const { theme } = useTheme();
   const [isReporting, setIsReporting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -216,10 +218,14 @@ export const EmergencyButton: React.FC<EmergencyButtonProps> = ({ onModalStateCh
 
           <button
             onClick={() => setShowSuccessModal(false)}
-            className="px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all shadow-lg"
+            className={`px-8 py-3 text-white rounded-lg font-semibold transition-all shadow-lg ${
+              theme === 'dark'
+                ? 'bg-gradient-to-r from-[#6b8e23] to-[#7a9c4f] hover:from-[#7a9c4f] hover:to-[#8fa85c]'
+                : 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
+            }`}
           >
             Understood - Close
-    </button>
+          </button>
         </div>
       </Modal>
     </>

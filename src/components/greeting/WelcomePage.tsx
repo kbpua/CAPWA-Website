@@ -1,10 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../common/Button';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const WelcomePage: React.FC = () => {
+  const { theme } = useTheme();
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50/30 to-beige-50 relative overflow-hidden">
+    <div 
+      className="min-h-screen relative overflow-hidden transition-colors duration-300"
+      style={{
+        background: theme === 'dark' 
+          ? 'linear-gradient(to bottom right, #1a2332, #243447, #2d4054)'
+          : 'linear-gradient(to bottom right, #f0fdf4, #fefce8, #fef3c7)'
+      }}
+    >
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-32 h-32 bg-yellow-200/20 rounded-full blur-3xl"></div>
@@ -41,13 +51,13 @@ export const WelcomePage: React.FC = () => {
               <div className="absolute -bottom-1 md:-bottom-2 -left-2 md:-left-4 text-green-400 text-xl md:text-2xl">✨</div>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6">
-              <span className="block text-green-700">CAPWA</span>
-              <span className="block text-yellow-500 text-3xl sm:text-4xl md:text-5xl mt-2">Animal Welfare</span>
+              <span className={`block ${theme === 'dark' ? 'text-green-400' : 'text-green-700'}`}>CAPWA</span>
+              <span className={`block text-3xl sm:text-4xl md:text-5xl mt-2 ${theme === 'dark' ? 'text-yellow-400' : 'text-yellow-500'}`}>Animal Welfare</span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-3 md:mb-4 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className={`text-lg sm:text-xl md:text-2xl mb-3 md:mb-4 max-w-3xl mx-auto leading-relaxed px-4 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
               Community Animals Partners & Welfare Advocates
             </p>
-            <p className="text-base sm:text-lg text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto px-4">
+            <p className={`text-base sm:text-lg mb-6 md:mb-8 max-w-2xl mx-auto px-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
               Help protect animals across the Philippines by reporting incidents quickly and easily.
               Our platform connects concerned citizens with animal welfare organizations.
             </p>
@@ -55,7 +65,13 @@ export const WelcomePage: React.FC = () => {
 
           {/* Features Grid with collage-style cards */}
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 text-center transform hover:scale-105 transition-all duration-300 border-2 border-green-200 relative overflow-hidden">
+            <div 
+              className="backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 text-center transform hover:scale-105 transition-all duration-300 border-2 relative overflow-hidden"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--card-bg)' : 'rgba(255, 255, 255, 0.8)',
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#bbf7d0',
+              }}
+            >
               <div className="absolute top-2 right-2 w-16 h-16 bg-yellow-200/30 rounded-full blur-xl"></div>
               <div className="relative z-10">
                 <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-lg">
@@ -63,14 +79,28 @@ export const WelcomePage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                   </svg>
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-gray-900">Interactive Map</h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <h3 
+                  className="text-xl md:text-2xl font-bold mb-3 md:mb-4"
+                  style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+                >
+                  Interactive Map
+                </h3>
+                <p 
+                  className="text-sm md:text-base leading-relaxed"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+                >
                   Pinpoint incident locations on an interactive map for precise reporting across the Philippines
                 </p>
               </div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 text-center transform hover:scale-105 transition-all duration-300 border-2 border-yellow-200 relative overflow-hidden">
+            <div 
+              className="backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 text-center transform hover:scale-105 transition-all duration-300 border-2 relative overflow-hidden"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--card-bg)' : 'rgba(255, 255, 255, 0.8)',
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#fde68a',
+              }}
+            >
               <div className="absolute top-2 left-2 w-16 h-16 bg-green-200/30 rounded-full blur-xl"></div>
               <div className="relative z-10">
                 <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-lg">
@@ -78,14 +108,28 @@ export const WelcomePage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-gray-900">Quick Reporting</h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <h3 
+                  className="text-xl md:text-2xl font-bold mb-3 md:mb-4"
+                  style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+                >
+                  Quick Reporting
+                </h3>
+                <p 
+                  className="text-sm md:text-base leading-relaxed"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+                >
                   Submit reports with descriptions and severity levels in minutes. Emergency SOS available for critical cases.
                 </p>
               </div>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 text-center transform hover:scale-105 transition-all duration-300 border-2 border-green-200 relative overflow-hidden sm:col-span-2 md:col-span-1">
+            <div 
+              className="backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 text-center transform hover:scale-105 transition-all duration-300 border-2 relative overflow-hidden sm:col-span-2 md:col-span-1"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--card-bg)' : 'rgba(255, 255, 255, 0.8)',
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#bbf7d0',
+              }}
+            >
               <div className="absolute bottom-2 right-2 w-16 h-16 bg-yellow-200/30 rounded-full blur-xl"></div>
               <div className="relative z-10">
                 <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 shadow-lg">
@@ -93,8 +137,16 @@ export const WelcomePage: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-gray-900">AI Assistant</h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                <h3 
+                  className="text-xl md:text-2xl font-bold mb-3 md:mb-4"
+                  style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+                >
+                  AI Assistant
+                </h3>
+                <p 
+                  className="text-sm md:text-base leading-relaxed"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+                >
                   Get instant help with our AI chatbot. Emergency protocols and guidance available 24/7.
                 </p>
               </div>
@@ -102,7 +154,14 @@ export const WelcomePage: React.FC = () => {
           </div>
 
           {/* Call to Action */}
-          <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-2xl p-6 md:p-10 text-center relative overflow-hidden">
+          <div 
+            className="rounded-2xl shadow-2xl p-6 md:p-10 text-center relative overflow-hidden transition-colors duration-300"
+            style={{
+              background: theme === 'dark'
+                ? 'linear-gradient(to right, #6b8e23, #7a9c4f)'
+                : 'linear-gradient(to right, #10b981, #059669)',
+            }}
+          >
             <div className="absolute inset-0 opacity-20">
               <div className="absolute inset-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }}></div>
             </div>
@@ -130,11 +189,33 @@ export const WelcomePage: React.FC = () => {
 
           {/* Animal speech bubbles decoration */}
           <div className="mt-12 md:mt-16 flex justify-around items-end gap-4">
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-3 md:p-4 shadow-lg border-2 border-green-300 transform -rotate-3 hover:rotate-0 transition-all duration-300 hover:scale-105">
-              <p className="text-lg md:text-2xl font-bold text-green-700">ARF ARF! 🐕</p>
+            <div 
+              className="backdrop-blur-sm rounded-3xl p-3 md:p-4 shadow-lg border-2 transform -rotate-3 hover:rotate-0 transition-all duration-300 hover:scale-105"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--card-bg)' : 'rgba(255, 255, 255, 0.9)',
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#86efac',
+              }}
+            >
+              <p 
+                className="text-lg md:text-2xl font-bold"
+                style={{ color: theme === 'dark' ? '#34d399' : '#15803d' }}
+              >
+                ARF ARF! 🐕
+              </p>
             </div>
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-3 md:p-4 shadow-lg border-2 border-yellow-300 transform rotate-3 hover:rotate-0 transition-all duration-300 hover:scale-105">
-              <p className="text-lg md:text-2xl font-bold text-yellow-700">MEOW! 🐱</p>
+            <div 
+              className="backdrop-blur-sm rounded-3xl p-3 md:p-4 shadow-lg border-2 transform rotate-3 hover:rotate-0 transition-all duration-300 hover:scale-105"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--card-bg)' : 'rgba(255, 255, 255, 0.9)',
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#fde047',
+              }}
+            >
+              <p 
+                className="text-lg md:text-2xl font-bold"
+                style={{ color: theme === 'dark' ? '#fbbf24' : '#a16207' }}
+              >
+                MEOW! 🐱
+              </p>
             </div>
           </div>
         </div>

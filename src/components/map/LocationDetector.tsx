@@ -10,6 +10,7 @@ interface LocationDetectorProps {
 export const LocationDetector: React.FC<LocationDetectorProps> = ({ onLocationDetected, isModalOpen }) => {
   const { location, loading, refreshLocation } = useLocation();
   const [isVisible, setIsVisible] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export const LocationDetector: React.FC<LocationDetectorProps> = ({ onLocationDe
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let ticking = false;
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    let timeoutId: NodeJS.Timeout | null = null;
 
     const handleScroll = () => {
       if (!ticking) {
@@ -74,6 +75,7 @@ export const LocationDetector: React.FC<LocationDetectorProps> = ({ onLocationDe
   useEffect(() => {
     if (location) {
       setIsVisible(true);
+      setIsCollapsed(false);
     }
   }, [location]);
 

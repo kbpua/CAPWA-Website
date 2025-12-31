@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useChatbot } from '../../hooks/useChatbot';
+import { useTheme } from '../../contexts/ThemeContext';
 import { ChatMessage } from './ChatMessage';
 import { Button } from '../common/Button';
 
@@ -7,6 +8,7 @@ export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const { messages, loading, sendMessage, loadHistory, clearChat } = useChatbot();
+  const { theme } = useTheme();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,7 +60,13 @@ export const ChatbotWidget: React.FC = () => {
   }
 
   return (
-      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-[calc(100vw-2rem)] h-[calc(100vh-8rem)] max-w-sm md:max-w-md lg:max-w-96 md:h-[500px] lg:h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border-2 border-green-200 overflow-hidden">
+      <div 
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-[calc(100vw-2rem)] h-[calc(100vh-8rem)] max-w-sm md:max-w-md lg:max-w-96 md:h-[500px] lg:h-[600px] rounded-2xl shadow-2xl flex flex-col z-50 border-2 overflow-hidden transition-colors duration-300"
+        style={{
+          backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+          borderColor: theme === 'dark' ? 'var(--border-color)' : '#bbf7d0',
+        }}
+      >
         {/* Header */}
         <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-3 md:p-4 flex items-center justify-between shadow-md">
           <div>
@@ -77,9 +85,17 @@ export const ChatbotWidget: React.FC = () => {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-3 md:p-4 bg-gray-50">
+      <div 
+        className="flex-1 overflow-y-auto p-3 md:p-4 transition-colors duration-300"
+        style={{
+          backgroundColor: theme === 'dark' ? 'var(--bg-secondary)' : '#f9fafb',
+        }}
+      >
         {messages.length === 0 ? (
-          <div className="text-center text-gray-500 mt-4 md:mt-8">
+          <div 
+            className="text-center mt-4 md:mt-8"
+            style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+          >
             <p className="mb-3 md:mb-4 text-sm md:text-base">👋 Hello! I'm here to help with animal emergencies in the Philippines.</p>
             <div className="space-y-2">
               <Button
@@ -130,14 +146,25 @@ export const ChatbotWidget: React.FC = () => {
       </div>
 
       {/* Input */}
-      <div className="p-3 md:p-4 border-t border-gray-200 bg-white rounded-b-lg">
+      <div 
+        className="p-3 md:p-4 border-t rounded-b-lg transition-colors duration-300"
+        style={{
+          backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+          borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+        }}
+      >
         <form onSubmit={handleSend} className="flex space-x-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 px-2 md:px-3 py-1.5 md:py-2 text-sm md:text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="flex-1 px-2 md:px-3 py-1.5 md:py-2 text-sm md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors duration-300"
+            style={{
+              backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+              borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+              color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+            }}
             disabled={loading}
           />
           <Button type="submit" variant="primary" disabled={loading || !input.trim()} className="text-xs md:text-sm px-3 md:px-4">

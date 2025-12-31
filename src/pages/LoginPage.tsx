@@ -2,9 +2,11 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { LoginForm } from '../components/auth/LoginForm';
 import { useAuth } from '../components/auth/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 export const LoginPage: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
+  const { theme } = useTheme();
 
   // Redirect to home if already logged in
   if (loading) {
@@ -20,7 +22,14 @@ export const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-blue-50 flex items-center justify-center py-12 px-4">
+    <div 
+      className="min-h-screen flex items-center justify-center py-12 px-4 transition-colors duration-300"
+      style={{
+        background: theme === 'dark' 
+          ? 'linear-gradient(to bottom right, #1a2332, #243447, #2d4054)'
+          : 'linear-gradient(to bottom right, #d1fae5, #ffffff, #dbeafe)'
+      }}
+    >
       <LoginForm />
     </div>
   );

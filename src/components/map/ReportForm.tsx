@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { IncidentType, SeverityLevel, Location, ReporterInfo } from '../../types';
+import { useTheme } from '../../contexts/ThemeContext';
 import { Button } from '../common/Button';
 
 interface ReportFormProps {
@@ -15,6 +16,7 @@ interface ReportFormProps {
 }
 
 export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCancel }) => {
+  const { theme } = useTheme();
   const [type, setType] = useState<IncidentType>('other');
   const [description, setDescription] = useState('');
   const [severity, setSeverity] = useState<SeverityLevel>('medium');
@@ -42,41 +44,93 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-green-100">
-        <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-t-2xl p-6 text-white">
+      <div 
+        className="rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 transition-colors duration-300"
+        style={{
+          backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+          borderColor: theme === 'dark' ? 'var(--border-color)' : '#bbf7d0',
+        }}
+      >
+        <div 
+          className="rounded-t-2xl p-6 text-white transition-colors duration-300"
+          style={{
+            background: theme === 'dark'
+              ? 'linear-gradient(to right, #6b8e23, #7a9c4f)'
+              : 'linear-gradient(to right, #10b981, #059669)',
+          }}
+        >
           <h2 className="text-2xl font-bold mb-1">Report Incident</h2>
-          <p className="text-green-100 text-sm">Help us protect animals in the Philippines</p>
+          <p className="text-white/90 text-sm">Help us protect animals in the Philippines</p>
         </div>
         <div className="p-6">
           
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Location Info */}
-            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-xl border-2 border-blue-200">
+            <div 
+              className="p-4 rounded-xl border-2 transition-colors duration-300"
+              style={{
+                background: theme === 'dark' 
+                  ? 'linear-gradient(to bottom right, #1e3a5f, #1e4a6f)'
+                  : 'linear-gradient(to bottom right, #eff6ff, #e0f2fe)',
+                borderColor: theme === 'dark' ? '#3a4d63' : '#bfdbfe',
+              }}
+            >
               <div className="flex items-center space-x-2 mb-2">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg 
+                  className="w-5 h-5" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  style={{ color: theme === 'dark' ? '#93c5fd' : '#2563eb' }}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <p className="text-sm font-semibold text-blue-900">Selected Location</p>
+                <p 
+                  className="text-sm font-semibold"
+                  style={{ color: theme === 'dark' ? '#bfdbfe' : '#1e40af' }}
+                >
+                  Selected Location
+                </p>
               </div>
-              <p className="text-sm font-mono text-gray-900 bg-white/60 rounded-lg px-3 py-2">
+              <p 
+                className="text-sm font-mono rounded-lg px-3 py-2"
+                style={{
+                  backgroundColor: theme === 'dark' ? 'rgba(30, 58, 95, 0.6)' : 'rgba(255, 255, 255, 0.6)',
+                  color: theme === 'dark' ? 'var(--text-primary)' : '#111827',
+                }}
+              >
                 {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
               </p>
               {location.address && (
-                <p className="text-sm text-gray-700 mt-2">{location.address}</p>
+                <p 
+                  className="text-sm mt-2"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+                >
+                  {location.address}
+                </p>
               )}
             </div>
 
             {/* Incident Type */}
             <div>
-              <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
+              <label 
+                htmlFor="type" 
+                className="block text-sm font-medium mb-1"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+              >
                 Incident Type <span className="text-red-500">*</span>
               </label>
               <select
                 id="type"
                 value={type}
                 onChange={(e) => setType(e.target.value as IncidentType)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium text-gray-900 bg-white transition-all"
+                className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium transition-all"
+                style={{
+                  backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                  borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                  color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                }}
                 required
               >
               <option value="abandoned">Abandoned Animal</option>
@@ -90,14 +144,23 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
 
             {/* Severity Level */}
             <div>
-              <label htmlFor="severity" className="block text-sm font-medium text-gray-700 mb-1">
+              <label 
+                htmlFor="severity" 
+                className="block text-sm font-medium mb-1"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+              >
                 Severity Level <span className="text-red-500">*</span>
               </label>
               <select
                 id="severity"
                 value={severity}
                 onChange={(e) => setSeverity(e.target.value as SeverityLevel)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium text-gray-900 bg-white transition-all"
+                className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium transition-all"
+                style={{
+                  backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                  borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                  color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                }}
                 required
               >
                 <option value="low">Low - Monitor situation</option>
@@ -109,7 +172,11 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+              <label 
+                htmlFor="description" 
+                className="block text-sm font-medium mb-1"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+              >
                 Description <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -117,7 +184,12 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={5}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 resize-none transition-all"
+                className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none transition-all"
+                style={{
+                  backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                  borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                  color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                }}
                 placeholder="Please provide detailed information about the incident (location, animal condition, situation, etc.)..."
                 required
               />
@@ -125,10 +197,21 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
 
             {/* Photo Upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label 
+                className="block text-sm font-medium mb-2"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+              >
                 Photos (Optional)
               </label>
-              <div className="border-2 border-dashed border-green-300 rounded-xl p-6 text-center bg-gradient-to-br from-green-50/50 to-emerald-50/50 hover:border-green-400 transition-colors cursor-pointer group">
+              <div 
+                className="border-2 border-dashed rounded-xl p-6 text-center hover:border-green-400 transition-colors cursor-pointer group"
+                style={{
+                  borderColor: theme === 'dark' ? 'var(--border-color)' : '#86efac',
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(to bottom right, rgba(30, 58, 95, 0.3), rgba(30, 74, 111, 0.3))'
+                    : 'linear-gradient(to bottom right, rgba(240, 253, 244, 0.5), rgba(209, 250, 229, 0.5))',
+                }}
+              >
                 <input
                   type="file"
                   accept="image/*"
@@ -157,10 +240,20 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <p className="mt-3 text-sm font-medium text-gray-700 group-hover:text-green-700 transition-colors">
+                  <p 
+                    className="mt-3 text-sm font-medium transition-colors"
+                    style={{ 
+                      color: theme === 'dark' ? 'var(--text-secondary)' : '#374151',
+                    }}
+                  >
                     Click to upload photos
                   </p>
-                  <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 10MB each</p>
+                  <p 
+                    className="mt-1 text-xs"
+                    style={{ color: theme === 'dark' ? 'var(--text-tertiary)' : '#6b7280' }}
+                  >
+                    PNG, JPG, GIF up to 10MB each
+                  </p>
                 </label>
               </div>
             </div>
