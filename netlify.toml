@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && npm install @rolldown/binding-linux-x64-gnu @tailwindcss/oxide-linux-x64-gnu lightningcss-linux-x64-gnu --no-save && npm run build"
+  command = "npm install && npm run build"
   publish = "dist"
 
 [[redirects]]
