@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "npm rebuild lightningcss || true"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -39,7 +40,9 @@
     "@tailwindcss/vite": "^4.1.18",
     "typescript": "~5.9.3",
     "vite": "npm:rolldown-vite@7.2.5",
-    "@rolldown/binding-linux-x64-gnu": "^1.0.0-beta.58"
+    "@rolldown/binding-linux-x64-gnu": "^1.0.0-beta.58",
+    "lightningcss-linux-x64-gnu": "^1.28.1",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.1.18"
   }
 }
 
