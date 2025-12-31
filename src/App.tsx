@@ -4,6 +4,7 @@ import { AuthProvider } from './components/auth/AuthContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
+import { LoadingScreen } from './components/common/LoadingScreen';
 import { ChatbotWidget } from './components/chatbot/ChatbotWidget';
 import { HomePage } from './pages/HomePage';
 import { LoginPage } from './pages/LoginPage';
@@ -15,6 +16,7 @@ import { ProfilePage } from './pages/ProfilePage';
 function App() {
   return (
     <AuthProvider>
+      <LoadingScreen />
       <Router>
         <div className="flex flex-col min-h-screen">
           <Header />

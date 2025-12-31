@@ -104,30 +104,30 @@ export const Header: React.FC = () => {
           ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-green-100' 
           : 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-lg'
       }`}>
-        <nav className="container mx-auto px-4 py-3 lg:py-4">
-          <div className="flex items-center justify-between">
+        <nav className="container mx-auto px-3 sm:px-4 md:px-6 py-2.5 sm:py-3 md:py-3.5 lg:py-4">
+          <div className="flex items-center justify-between gap-2 sm:gap-3">
             {/* Logo */}
             <Link 
               to="/" 
-              className="flex items-center space-x-2 lg:space-x-3 hover:opacity-90 transition-all duration-200 hover:scale-105 group"
+              className="flex items-center space-x-1.5 sm:space-x-2 md:space-x-2.5 lg:space-x-3 hover:opacity-90 transition-all duration-200 hover:scale-105 group flex-shrink-0"
             >
               <div className="relative">
                 <img 
                   src="/Logo.png" 
                   alt="CAPWA Logo" 
-                  className="w-10 h-10 lg:w-12 lg:h-12 object-contain transition-transform duration-200 group-hover:rotate-6"
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 object-contain transition-transform duration-200 group-hover:rotate-6"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
               </div>
-              <div className="flex flex-col">
-                <span className={`text-xl lg:text-2xl font-bold transition-colors duration-300 ${
+              <div className="flex flex-col min-w-0">
+                <span className={`text-base sm:text-lg md:text-xl lg:text-2xl font-bold transition-colors duration-300 truncate ${
                   scrolled ? 'text-green-700' : 'text-white'
                 }`}>
                   CAPWA
                 </span>
-                <span className={`text-[10px] lg:text-xs transition-colors duration-300 hidden sm:block ${
+                <span className={`text-[9px] sm:text-[10px] md:text-xs lg:text-xs transition-colors duration-300 hidden md:block ${
                   scrolled ? 'text-green-600' : 'text-green-100'
                 }`}>
                   Community Animals Partners & Welfare Advocates
@@ -136,14 +136,14 @@ export const Header: React.FC = () => {
             </Link>
             
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-2">
+            <div className="hidden lg:flex items-center space-x-1.5 xl:space-x-2 flex-shrink-0">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-200 font-medium ${
+                    className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
                       isActive(link.path)
                         ? scrolled
                           ? 'bg-green-100 text-green-700 shadow-md'
@@ -153,18 +153,160 @@ export const Header: React.FC = () => {
                           : 'text-white hover:bg-white/20'
                     } hover:scale-105`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span>{link.label}</span>
+                    <Icon className="w-4 h-4 flex-shrink-0" />
+                    <span className="whitespace-nowrap">{link.label}</span>
                   </Link>
                 );
               })}
-              {authLinks}
+              <div className="flex items-center space-x-1.5 xl:space-x-2">
+                {isAuthenticated ? (
+                  <>
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
+                          isActive('/admin')
+                            ? scrolled
+                              ? 'bg-green-100 text-green-700 shadow-md'
+                              : 'bg-white text-green-700 shadow-lg'
+                            : scrolled
+                              ? 'text-green-700 hover:bg-green-50'
+                              : 'text-white hover:bg-white/20'
+                        } hover:scale-105`}
+                      >
+                        <Shield className="w-4 h-4 flex-shrink-0" />
+                        <span className="hidden xl:inline">Admin</span>
+                      </Link>
+                    )}
+                    <Link
+                      to="/profile"
+                      className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
+                        isActive('/profile')
+                          ? scrolled
+                            ? 'bg-green-100 text-green-700 shadow-md'
+                            : 'bg-white text-green-700 shadow-lg'
+                          : scrolled
+                            ? 'text-green-700 hover:bg-green-50'
+                            : 'text-white hover:bg-white/20'
+                      } hover:scale-105`}
+                    >
+                      <User className="w-4 h-4 flex-shrink-0" />
+                      <span className="max-w-[100px] xl:max-w-none truncate">{user?.name || 'Profile'}</span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
+                        scrolled
+                          ? 'text-green-700 hover:bg-green-50'
+                          : 'text-white hover:bg-white/20'
+                      } hover:scale-105`}
+                    >
+                      <LogOut className="w-4 h-4 flex-shrink-0" />
+                      <span className="hidden xl:inline">Logout</span>
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    className={`flex items-center space-x-1.5 xl:space-x-2 px-3 xl:px-4 py-2 xl:py-2.5 rounded-xl transition-all duration-200 font-medium text-sm xl:text-base ${
+                      isActive('/login')
+                        ? scrolled
+                          ? 'bg-green-100 text-green-700 shadow-md'
+                          : 'bg-white text-green-700 shadow-lg'
+                        : 'bg-yellow-400 text-green-800 hover:bg-yellow-300 shadow-md hover:shadow-lg'
+                    } hover:scale-105`}
+                  >
+                    <LogIn className="w-4 h-4 flex-shrink-0" />
+                    <span className="whitespace-nowrap">Login</span>
+                  </Link>
+                )}
+              </div>
+            </div>
+
+            {/* Tablet Navigation (md to lg) */}
+            <div className="hidden md:flex lg:hidden items-center space-x-2">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
+                      isActive(link.path)
+                        ? scrolled
+                          ? 'bg-green-100 text-green-700 shadow-md'
+                          : 'bg-white text-green-700 shadow-lg'
+                        : scrolled
+                          ? 'text-green-700 hover:bg-green-50'
+                          : 'text-white hover:bg-white/20'
+                    } hover:scale-105`}
+                    title={link.label}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </Link>
+                );
+              })}
+              {isAuthenticated ? (
+                <>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
+                        isActive('/admin')
+                          ? scrolled
+                            ? 'bg-green-100 text-green-700 shadow-md'
+                            : 'bg-white text-green-700 shadow-lg'
+                          : scrolled
+                            ? 'text-green-700 hover:bg-green-50'
+                            : 'text-white hover:bg-white/20'
+                      } hover:scale-105`}
+                      title="Admin"
+                    >
+                      <Shield className="w-4 h-4" />
+                    </Link>
+                  )}
+                  <Link
+                    to="/profile"
+                    className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
+                      isActive('/profile')
+                        ? scrolled
+                          ? 'bg-green-100 text-green-700 shadow-md'
+                          : 'bg-white text-green-700 shadow-lg'
+                        : scrolled
+                          ? 'text-green-700 hover:bg-green-50'
+                          : 'text-white hover:bg-white/20'
+                    } hover:scale-105`}
+                    title={user?.name || 'Profile'}
+                  >
+                    <User className="w-4 h-4" />
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
+                      scrolled
+                        ? 'text-green-700 hover:bg-green-50'
+                        : 'text-white hover:bg-white/20'
+                    } hover:scale-105`}
+                    title="Logout"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 font-medium text-sm bg-yellow-400 text-green-800 hover:bg-yellow-300 shadow-md hover:shadow-lg hover:scale-105`}
+                  title="Login"
+                >
+                  <LogIn className="w-4 h-4" />
+                </Link>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden p-2 rounded-lg transition-all duration-200 ${
+              className={`md:hidden p-2 rounded-lg transition-all duration-200 flex-shrink-0 ${
                 scrolled 
                   ? 'text-green-700 hover:bg-green-50' 
                   : 'text-white hover:bg-white/20'
@@ -191,7 +333,7 @@ export const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-72 sm:w-80 max-w-[85vw] bg-white shadow-2xl z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
