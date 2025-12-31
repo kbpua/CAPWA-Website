@@ -3,9 +3,11 @@ import { adminService } from '../../services/adminService';
 import type { User } from '../../types';
 import { Button } from '../common/Button';
 import { useAuth } from '../../hooks/useAuth';
+import { useTheme } from '../../contexts/ThemeContext';
 import toast from 'react-hot-toast';
 
 export const UserManagement: React.FC = () => {
+  const { theme } = useTheme();
   const [users, setUsers] = useState<Omit<User, 'password'>[]>([]);
   const [loading, setLoading] = useState(true);
   const { user: currentUser } = useAuth();
@@ -58,38 +60,105 @@ export const UserManagement: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+        <div 
+          className="animate-spin rounded-full h-12 w-12 border-b-2"
+          style={{
+            borderColor: theme === 'dark' ? '#6b8e23' : '#10b981',
+          }}
+        ></div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow">
-      <div className="px-6 py-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-900">User Management</h2>
+    <div 
+      className="rounded-lg shadow border transition-colors duration-300"
+      style={{
+        backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+        borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+      }}
+    >
+      <div 
+        className="px-6 py-4 border-b"
+        style={{
+          borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+        }}
+      >
+        <h2 
+          className="text-lg font-semibold"
+          style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+        >
+          User Management
+        </h2>
       </div>
       <div className="p-6">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y transition-colors duration-300" style={{ borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb' }}>
+            <thead 
+              className="transition-colors duration-300"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--bg-tertiary)' : '#f9fafb',
+              }}
+            >
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium uppercase"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+                >
+                  Name
+                </th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium uppercase"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+                >
+                  Email
+                </th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium uppercase"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+                >
+                  Role
+                </th>
+                <th 
+                  className="px-6 py-3 text-left text-xs font-medium uppercase"
+                  style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+                >
+                  Actions
+                </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody 
+              className="divide-y transition-colors duration-300"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+              }}
+            >
               {users.map((user) => (
                 <tr key={user.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.email}</td>
+                  <td 
+                    className="px-6 py-4 whitespace-nowrap text-sm"
+                    style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+                  >
+                    {user.name}
+                  </td>
+                  <td 
+                    className="px-6 py-4 whitespace-nowrap text-sm"
+                    style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+                  >
+                    {user.email}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <select
                       value={user.role}
                       onChange={(e) => handleRoleChange(user.id, e.target.value as User['role'])}
                       disabled={user.id === currentUser?.id}
-                      className="text-sm border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="text-sm border rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                      style={{
+                        backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                        borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                        color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                      }}
                     >
                       <option value="user">User</option>
                       <option value="admin">Admin</option>

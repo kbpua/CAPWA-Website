@@ -89,18 +89,53 @@ export const EmergencyButton: React.FC<EmergencyButtonProps> = ({ onModalStateCh
         size="md"
       >
         <div className="text-center">
-          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
-            <AlertTriangle className="h-10 w-10 text-red-600" />
+          <div 
+            className="mx-auto flex items-center justify-center h-16 w-16 rounded-full mb-4"
+            style={{
+              backgroundColor: theme === 'dark' ? 'rgba(220, 38, 38, 0.2)' : '#fee2e2',
+            }}
+          >
+            <AlertTriangle 
+              className="h-10 w-10" 
+              style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+            />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Emergency SOS Report</h3>
-          <p className="text-gray-600 mb-6">
-            This will create a <span className="font-bold text-red-600">CRITICAL EMERGENCY</span> incident report.
+          <h3 
+            className="text-2xl font-bold mb-2"
+            style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+          >
+            Emergency SOS Report
+          </h3>
+          <p 
+            className="mb-6"
+            style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+          >
+            This will create a <span 
+              className="font-bold"
+              style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+            >
+              CRITICAL EMERGENCY
+            </span> incident report.
             Emergency services will be notified immediately.
           </p>
           
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 text-left">
-            <p className="text-sm font-semibold text-red-900 mb-2">⚠️ Please confirm:</p>
-            <ul className="text-sm text-red-800 space-y-1">
+          <div 
+            className="border rounded-lg p-4 mb-6 text-left"
+            style={{
+              backgroundColor: theme === 'dark' ? 'rgba(220, 38, 38, 0.1)' : '#fef2f2',
+              borderColor: theme === 'dark' ? 'rgba(220, 38, 38, 0.3)' : '#fecaca',
+            }}
+          >
+            <p 
+              className="text-sm font-semibold mb-2"
+              style={{ color: theme === 'dark' ? '#fca5a5' : '#991b1b' }}
+            >
+              ⚠️ Please confirm:
+            </p>
+            <ul 
+              className="text-sm space-y-1"
+              style={{ color: theme === 'dark' ? '#fca5a5' : '#991b1b' }}
+            >
               <li>• This is a life-threatening emergency</li>
               <li>• Immediate assistance is required</li>
               <li>• Your location will be shared with emergency services</li>
@@ -110,7 +145,17 @@ export const EmergencyButton: React.FC<EmergencyButtonProps> = ({ onModalStateCh
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => setShowConfirmModal(false)}
-              className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300 transition-colors flex items-center justify-center gap-2"
+              className="px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+              style={{
+                backgroundColor: theme === 'dark' ? 'var(--bg-tertiary)' : '#e5e7eb',
+                color: theme === 'dark' ? 'var(--text-primary)' : '#1f2937',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = theme === 'dark' ? 'var(--border-color)' : '#d1d5db';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = theme === 'dark' ? 'var(--bg-tertiary)' : '#e5e7eb';
+              }}
             >
               <X className="w-5 h-5" />
               Cancel
@@ -144,42 +189,104 @@ export const EmergencyButton: React.FC<EmergencyButtonProps> = ({ onModalStateCh
         size="lg"
       >
         <div className="text-center">
-          <div className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-green-100 mb-4 animate-pulse">
-            <CheckCircle className="h-12 w-12 text-green-600" />
+          <div 
+            className="mx-auto flex items-center justify-center h-20 w-20 rounded-full mb-4 animate-pulse"
+            style={{
+              backgroundColor: theme === 'dark' ? 'rgba(16, 185, 129, 0.2)' : '#d1fae5',
+            }}
+          >
+            <CheckCircle 
+              className="h-12 w-12" 
+              style={{ color: theme === 'dark' ? '#6ee7b7' : '#059669' }}
+            />
           </div>
-          <h3 className="text-3xl font-bold text-gray-900 mb-2">🚨 Emergency Report Submitted</h3>
-          <p className="text-lg text-gray-700 mb-6">
+          <h3 
+            className="text-3xl font-bold mb-2"
+            style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+          >
+            🚨 Emergency Report Submitted
+          </h3>
+          <p 
+            className="text-lg mb-6"
+            style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+          >
             Emergency services have been notified. Help is on the way!
           </p>
 
-          <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl p-6 mb-6">
-            <h4 className="text-xl font-bold text-red-900 mb-4 flex items-center justify-center gap-2">
+          <div 
+            className="border-2 rounded-xl p-6 mb-6"
+            style={{
+              background: theme === 'dark'
+                ? 'linear-gradient(to right, rgba(220, 38, 38, 0.15), rgba(251, 146, 60, 0.15))'
+                : 'linear-gradient(to right, #fef2f2, #fff7ed)',
+              borderColor: theme === 'dark' ? 'rgba(220, 38, 38, 0.3)' : '#fecaca',
+            }}
+          >
+            <h4 
+              className="text-xl font-bold mb-4 flex items-center justify-center gap-2"
+              style={{ color: theme === 'dark' ? '#fca5a5' : '#991b1b' }}
+            >
               <AlertTriangle className="w-6 h-6" />
               Stay Safe - Important Instructions
             </h4>
-            <ul className="text-left text-gray-800 space-y-2 mb-4">
+            <ul 
+              className="text-left space-y-2 mb-4"
+              style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#1f2937' }}
+            >
               <li className="flex items-start gap-2">
-                <span className="text-red-600 font-bold">•</span>
+                <span 
+                  className="font-bold"
+                  style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+                >
+                  •
+                </span>
                 <span>Stay in a safe location if possible</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 font-bold">•</span>
+                <span 
+                  className="font-bold"
+                  style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+                >
+                  •
+                </span>
                 <span>Keep your phone accessible for emergency responders</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 font-bold">•</span>
+                <span 
+                  className="font-bold"
+                  style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+                >
+                  •
+                </span>
                 <span>Do not approach aggressive or injured animals</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 font-bold">•</span>
+                <span 
+                  className="font-bold"
+                  style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+                >
+                  •
+                </span>
                 <span>Wait for professional assistance to arrive</span>
               </li>
             </ul>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center justify-center gap-2">
-              <Phone className="w-5 h-5 text-red-600" />
+          <div 
+            className="border rounded-xl p-6 mb-6"
+            style={{
+              backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+              borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+            }}
+          >
+            <h4 
+              className="text-lg font-semibold mb-4 flex items-center justify-center gap-2"
+              style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+            >
+              <Phone 
+                className="w-5 h-5" 
+                style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+              />
               Emergency Contacts
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -187,18 +294,57 @@ export const EmergencyButton: React.FC<EmergencyButtonProps> = ({ onModalStateCh
                 <button
                   key={contact.id}
                   onClick={() => handleCall(contact.phone)}
-                  className="flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-lg hover:from-red-100 hover:to-orange-100 transition-all group"
+                  className="flex items-center justify-between p-4 border-2 rounded-lg transition-all group"
+                  style={{
+                    background: theme === 'dark'
+                      ? 'linear-gradient(to right, rgba(220, 38, 38, 0.1), rgba(251, 146, 60, 0.1))'
+                      : 'linear-gradient(to right, #fef2f2, #fff7ed)',
+                    borderColor: theme === 'dark' ? 'rgba(220, 38, 38, 0.3)' : '#fecaca',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = theme === 'dark'
+                      ? 'linear-gradient(to right, rgba(220, 38, 38, 0.2), rgba(251, 146, 60, 0.2))'
+                      : 'linear-gradient(to right, #fee2e2, #fed7aa)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = theme === 'dark'
+                      ? 'linear-gradient(to right, rgba(220, 38, 38, 0.1), rgba(251, 146, 60, 0.1))'
+                      : 'linear-gradient(to right, #fef2f2, #fff7ed)';
+                  }}
                 >
                   <div className="text-left">
-                    <p className="font-semibold text-gray-900">{contact.name}</p>
-                    <p className="text-sm text-gray-600">{contact.phone}</p>
+                    <p 
+                      className="font-semibold"
+                      style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+                    >
+                      {contact.name}
+                    </p>
+                    <p 
+                      className="text-sm"
+                      style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+                    >
+                      {contact.phone}
+                    </p>
                   </div>
-                  <Phone className="w-5 h-5 text-red-600 group-hover:scale-110 transition-transform" />
+                  <Phone 
+                    className="w-5 h-5 group-hover:scale-110 transition-transform" 
+                    style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+                  />
                 </button>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-600 mb-2">For immediate life-threatening emergencies:</p>
+            <div 
+              className="mt-4 pt-4 border-t"
+              style={{
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+              }}
+            >
+              <p 
+                className="text-sm mb-2"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+              >
+                For immediate life-threatening emergencies:
+              </p>
               <div className="flex flex-wrap gap-2 justify-center">
                 <button
                   onClick={() => handleCall('117')}

@@ -146,6 +146,23 @@ button, a, input, select, textarea {
               box-shadow 0.3s ease;
 }
 
+/* Enhanced dark mode focus states */
+[data-theme="dark"] *:focus-visible {
+  outline-color: var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Better selection colors for dark mode */
+[data-theme="dark"] ::selection {
+  background-color: rgba(107, 142, 35, 0.3);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] ::-moz-selection {
+  background-color: rgba(107, 142, 35, 0.3);
+  color: var(--text-primary);
+}
+
 /* Custom Leaflet marker styles */
 .custom-marker {
   background: transparent !important;
@@ -185,6 +202,39 @@ button, a, input, select, textarea {
 .leaflet-container {
   height: 100%;
   width: 100%;
+}
+
+/* Dark mode styling for Leaflet controls */
+[data-theme="dark"] .leaflet-control-zoom a {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .leaflet-control-zoom a:hover {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .leaflet-control-attribution {
+  background-color: rgba(36, 52, 71, 0.8) !important;
+  color: var(--text-secondary) !important;
+  backdrop-filter: blur(4px);
+}
+
+[data-theme="dark"] .leaflet-control-attribution a {
+  color: var(--accent-color) !important;
+}
+
+/* Light mode Leaflet controls */
+.leaflet-control-zoom a {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border-color: #cccccc !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #f4f4f4 !important;
 }
 
 /* Custom scrollbar styles */

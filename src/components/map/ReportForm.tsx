@@ -259,11 +259,25 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
             </div>
 
             {/* Reporter Info (Optional) */}
-            <div className="border-t pt-4">
-              <p className="text-sm font-medium text-gray-700 mb-3">Your Information (Optional)</p>
+            <div 
+              className="border-t pt-4"
+              style={{
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+              }}
+            >
+              <p 
+                className="text-sm font-medium mb-3"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+              >
+                Your Information (Optional)
+              </p>
               <div className="space-y-3">
                 <div>
-                  <label htmlFor="reporterName" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label 
+                    htmlFor="reporterName" 
+                    className="block text-sm font-medium mb-1"
+                    style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+                  >
                     Name
                   </label>
                   <input
@@ -271,12 +285,21 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
                     type="text"
                     value={reporterName}
                     onChange={(e) => setReporterName(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    style={{
+                      backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                      borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                      color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                    }}
                     placeholder="Your name (optional)"
                   />
                 </div>
                 <div>
-                  <label htmlFor="reporterContact" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label 
+                    htmlFor="reporterContact" 
+                    className="block text-sm font-medium mb-1"
+                    style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+                  >
                     Contact
                   </label>
                   <input
@@ -284,7 +307,12 @@ export const ReportForm: React.FC<ReportFormProps> = ({ location, onSubmit, onCa
                     type="text"
                     value={reporterContact}
                     onChange={(e) => setReporterContact(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    style={{
+                      backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                      borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                      color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                    }}
                     placeholder="Email or phone (optional)"
                   />
                 </div>

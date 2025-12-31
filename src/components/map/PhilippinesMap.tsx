@@ -9,6 +9,7 @@ import { DEFAULT_PH_LOCATION } from '../../utils/philippinesData';
 import { reportService } from '../../services/reportService';
 import { useLocation } from '../../hooks/useLocation';
 import { useAuth } from '../../hooks/useAuth';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const DEFAULT_ZOOM = 13;
 
@@ -37,8 +38,10 @@ export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick,
   const [clickedLocation, setClickedLocation] = useState<Location | null>(null);
   const [loading, setLoading] = useState(true);
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
+  const [showTapInstruction, setShowTapInstruction] = useState(true);
   const { location: userLocation } = useLocation();
   const { user } = useAuth();
+  const { theme } = useTheme();
 
   useEffect(() => {
     loadIncidents();
@@ -141,10 +144,60 @@ export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick,
 
       {/* Loading State */}
       {loading && (
-        <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-[999]">
+        <div 
+          className="absolute inset-0 bg-opacity-75 backdrop-blur-sm flex items-center justify-center z-[999]"
+          style={{
+            backgroundColor: theme === 'dark' ? 'rgba(26, 35, 50, 0.85)' : 'rgba(255, 255, 255, 0.85)',
+          }}
+        >
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
-            <p className="mt-4 text-gray-700">Loading incidents...</p>
+            <div 
+              className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto"
+              style={{
+                borderColor: theme === 'dark' ? '#6b8e23' : '#10b981',
+              }}
+            ></div>
+            <p 
+              className="mt-4"
+              style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#374151' }}
+            >
+              Loading incidents...
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Tap Map Instruction */}
+      {showTapInstruction && !showReportForm && !loading && (
+        <div 
+          className="absolute top-20 right-2 sm:right-3 md:right-4 backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 z-40 max-w-[200px] sm:max-w-xs border transition-all duration-300"
+          style={{
+            backgroundColor: theme === 'dark' ? 'rgba(36, 52, 71, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+            borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+          }}
+        >
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex items-start gap-2 flex-1">
+              <span className="text-lg sm:text-xl">📍</span>
+              <p 
+                className="text-xs sm:text-sm font-medium leading-tight"
+                style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#374151' }}
+              >
+                Tap map to report
+              </p>
+            </div>
+            <button
+              onClick={() => setShowTapInstruction(false)}
+              className="p-0.5 rounded transition-colors hover:bg-opacity-20 flex-shrink-0"
+              style={{
+                color: theme === 'dark' ? 'var(--text-tertiary)' : '#9ca3af',
+              }}
+              title="Dismiss"
+            >
+              <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         </div>
       )}

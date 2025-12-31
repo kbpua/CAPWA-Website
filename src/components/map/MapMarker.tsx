@@ -1,5 +1,6 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
+import { useTheme } from '../../contexts/ThemeContext';
 import type { IncidentReport } from '../../types';
 import L from 'leaflet';
 
@@ -34,9 +35,11 @@ interface MapMarkerProps {
 }
 
 export const MapMarker: React.FC<MapMarkerProps> = ({ incident, onClick }) => {
+  const { theme } = useTheme();
+  const borderColor = theme === 'dark' ? '#1a2332' : 'white';
   const customIcon = L.divIcon({
     className: 'custom-marker',
-    html: `<div style="background-color: ${getMarkerColor(incident.severity)}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+    html: `<div style="background-color: ${getMarkerColor(incident.severity)}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid ${borderColor}; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
     iconSize: [20, 20],
     iconAnchor: [10, 10],
   });
@@ -62,39 +65,118 @@ export const MapMarker: React.FC<MapMarkerProps> = ({ incident, onClick }) => {
       icon={customIcon}
     >
       <Popup className="custom-popup" autoClose={false} closeOnClick={true}>
-        <div className="p-3 min-w-[240px] max-w-[280px]">
+        <div 
+          className="p-3 min-w-[240px] max-w-[280px]"
+          style={{
+            color: theme === 'dark' ? 'var(--text-primary)' : '#111827',
+          }}
+        >
           <div className="flex items-center justify-between mb-3">
-            <span className="font-bold text-gray-900 capitalize text-base">{incident.type}</span>
+            <span 
+              className="font-bold capitalize text-base"
+              style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+            >
+              {incident.type}
+            </span>
             <span
-              className={`px-2.5 py-1 text-xs font-semibold rounded-full capitalize ${
-                incident.severity === 'critical'
-                  ? 'bg-red-100 text-red-800 border border-red-200'
+              className="px-2.5 py-1 text-xs font-semibold rounded-full capitalize"
+              style={{
+                backgroundColor: theme === 'dark'
+                  ? incident.severity === 'critical'
+                    ? 'rgba(220, 38, 38, 0.2)'
+                    : incident.severity === 'high'
+                    ? 'rgba(245, 158, 11, 0.2)'
+                    : incident.severity === 'medium'
+                    ? 'rgba(59, 130, 246, 0.2)'
+                    : 'rgba(16, 185, 129, 0.2)'
+                  : incident.severity === 'critical'
+                  ? '#fee2e2'
                   : incident.severity === 'high'
-                  ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                  ? '#fef3c7'
                   : incident.severity === 'medium'
-                  ? 'bg-blue-100 text-blue-800 border border-blue-200'
-                  : 'bg-green-100 text-green-800 border border-green-200'
-              }`}
+                  ? '#dbeafe'
+                  : '#d1fae5',
+                color: theme === 'dark'
+                  ? incident.severity === 'critical'
+                    ? '#fca5a5'
+                    : incident.severity === 'high'
+                    ? '#fcd34d'
+                    : incident.severity === 'medium'
+                    ? '#93c5fd'
+                    : '#6ee7b7'
+                  : incident.severity === 'critical'
+                  ? '#991b1b'
+                  : incident.severity === 'high'
+                  ? '#92400e'
+                  : incident.severity === 'medium'
+                  ? '#1e40af'
+                  : '#065f46',
+                borderColor: theme === 'dark'
+                  ? incident.severity === 'critical'
+                    ? 'rgba(220, 38, 38, 0.3)'
+                    : incident.severity === 'high'
+                    ? 'rgba(245, 158, 11, 0.3)'
+                    : incident.severity === 'medium'
+                    ? 'rgba(59, 130, 246, 0.3)'
+                    : 'rgba(16, 185, 129, 0.3)'
+                  : incident.severity === 'critical'
+                  ? '#fecaca'
+                  : incident.severity === 'high'
+                  ? '#fde68a'
+                  : incident.severity === 'medium'
+                  ? '#bfdbfe'
+                  : '#a7f3d0',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+              }}
             >
               {incident.severity}
             </span>
           </div>
           
-          <p className="text-sm text-gray-700 mb-3 line-clamp-3 leading-relaxed">{incident.description}</p>
+          <p 
+            className="text-sm mb-3 line-clamp-3 leading-relaxed"
+            style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+          >
+            {incident.description}
+          </p>
           
-          <div className="space-y-1.5 mb-3 pb-3 border-b border-gray-200">
-            <div className="flex items-center text-xs text-gray-600">
+          <div 
+            className="space-y-1.5 mb-3 pb-3 border-b"
+            style={{
+              borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+            }}
+          >
+            <div 
+              className="flex items-center text-xs"
+              style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+            >
               <span className="font-medium mr-2">Status:</span>
-              <span className="capitalize text-gray-800">{incident.status}</span>
+              <span 
+                className="capitalize"
+                style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+              >
+                {incident.status}
+              </span>
             </div>
-            <div className="flex items-center text-xs text-gray-600">
+            <div 
+              className="flex items-center text-xs"
+              style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+            >
               <span className="font-medium mr-2">Reported:</span>
-              <span className="text-gray-800">{formatDate(incident.timestamp)}</span>
+              <span style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}>
+                {formatDate(incident.timestamp)}
+              </span>
             </div>
             {incident.location.city && (
-              <div className="flex items-center text-xs text-gray-600">
+              <div 
+                className="flex items-center text-xs"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563' }}
+              >
                 <span className="font-medium mr-2">Location:</span>
-                <span className="text-gray-800">{incident.location.city}</span>
+                <span style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}>
+                  {incident.location.city}
+                </span>
               </div>
             )}
           </div>
@@ -102,7 +184,22 @@ export const MapMarker: React.FC<MapMarkerProps> = ({ incident, onClick }) => {
           {onClick && (
             <button
               onClick={handleViewDetails}
-              className="w-full px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-sm font-semibold rounded-lg hover:from-emerald-700 hover:to-green-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2"
+              className="w-full px-4 py-2.5 text-white text-sm font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2"
+              style={{
+                background: theme === 'dark'
+                  ? 'linear-gradient(to right, #6b8e23, #7a9c4f)'
+                  : 'linear-gradient(to right, #10b981, #059669)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = theme === 'dark'
+                  ? 'linear-gradient(to right, #7a9c4f, #8fa85c)'
+                  : 'linear-gradient(to right, #059669, #047857)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = theme === 'dark'
+                  ? 'linear-gradient(to right, #6b8e23, #7a9c4f)'
+                  : 'linear-gradient(to right, #10b981, #059669)';
+              }}
             >
               <span>View Details</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

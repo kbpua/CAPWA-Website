@@ -332,13 +332,23 @@ export const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-72 sm:w-80 max-w-[85vw] bg-white shadow-2xl z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-72 sm:w-80 max-w-[85vw] shadow-2xl z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{
+          backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+        }}
       >
         <div className="flex flex-col h-full">
           {/* Mobile Menu Header */}
-          <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-6 flex items-center justify-between">
+          <div 
+            className="p-6 flex items-center justify-between"
+            style={{
+              background: theme === 'dark'
+                ? 'linear-gradient(to right, #166534, #15803d)'
+                : 'linear-gradient(to right, #16a34a, #10b981)',
+            }}
+          >
             <div className="flex items-center space-x-3">
               <img 
                 src="/Logo.png" 
@@ -369,9 +379,13 @@ export const Header: React.FC = () => {
                   to={link.path}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
-                    isActive(link.path)
-                      ? 'bg-green-100 text-green-700 shadow-md'
-                      : 'text-gray-700 hover:bg-gray-100'
+                    theme === 'dark'
+                      ? isActive(link.path)
+                        ? 'bg-[#6b8e23] text-white shadow-md'
+                        : 'text-white hover:bg-white/10'
+                      : isActive(link.path)
+                        ? 'bg-green-100 text-green-700 shadow-md'
+                        : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -381,9 +395,19 @@ export const Header: React.FC = () => {
             })}
             
             {/* Theme Toggle in Mobile Menu */}
-            <div className="pt-4 border-t border-gray-200 mt-4 mb-4">
+            <div 
+              className="pt-4 border-t mt-4 mb-4"
+              style={{
+                borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+              }}
+            >
               <div className="flex items-center justify-between px-4 py-3">
-                <span className="text-gray-700 font-medium">Theme</span>
+                <span 
+                  className="font-medium"
+                  style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#374151' }}
+                >
+                  Theme
+                </span>
                 <ThemeToggle />
               </div>
             </div>
@@ -396,9 +420,13 @@ export const Header: React.FC = () => {
                       to="/admin"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
-                        isActive('/admin')
-                          ? 'bg-green-100 text-green-700 shadow-md'
-                          : 'text-gray-700 hover:bg-gray-100'
+                        theme === 'dark'
+                          ? isActive('/admin')
+                            ? 'bg-[#6b8e23] text-white shadow-md'
+                            : 'text-white hover:bg-white/10'
+                          : isActive('/admin')
+                            ? 'bg-green-100 text-green-700 shadow-md'
+                            : 'text-gray-700 hover:bg-gray-100'
                       }`}
                     >
                       <Shield className="w-5 h-5" />
@@ -425,8 +453,8 @@ export const Header: React.FC = () => {
                     onClick={handleLogout}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
                       theme === 'dark'
-                        ? 'text-red-400 hover:bg-red-500/20'
-                        : 'text-red-600 hover:bg-red-50'
+                        ? 'text-red-400 hover:bg-red-500/20 hover:text-red-300'
+                        : 'text-red-600 hover:bg-red-50 hover:text-red-700'
                     }`}
                   >
                     <LogOut className="w-5 h-5" />

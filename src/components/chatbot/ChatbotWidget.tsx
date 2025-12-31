@@ -131,11 +131,33 @@ export const ChatbotWidget: React.FC = () => {
             ))}
             {loading && (
               <div className="flex justify-start mb-4">
-                <div className="bg-gray-100 rounded-lg px-3 md:px-4 py-2">
+                <div 
+                  className="rounded-lg px-3 md:px-4 py-2"
+                  style={{
+                    backgroundColor: theme === 'dark' ? 'var(--bg-tertiary)' : '#f3f4f6',
+                  }}
+                >
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div 
+                      className="w-2 h-2 rounded-full animate-bounce"
+                      style={{
+                        backgroundColor: theme === 'dark' ? 'var(--text-tertiary)' : '#9ca3af',
+                      }}
+                    ></div>
+                    <div 
+                      className="w-2 h-2 rounded-full animate-bounce"
+                      style={{
+                        backgroundColor: theme === 'dark' ? 'var(--text-tertiary)' : '#9ca3af',
+                        animationDelay: '0.1s',
+                      }}
+                    ></div>
+                    <div 
+                      className="w-2 h-2 rounded-full animate-bounce"
+                      style={{
+                        backgroundColor: theme === 'dark' ? 'var(--text-tertiary)' : '#9ca3af',
+                        animationDelay: '0.2s',
+                      }}
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -174,7 +196,16 @@ export const ChatbotWidget: React.FC = () => {
         {messages.length > 0 && (
           <button
             onClick={clearChat}
-            className="mt-2 text-xs text-gray-500 hover:text-gray-700"
+            className="mt-2 text-xs transition-colors"
+            style={{
+              color: theme === 'dark' ? 'var(--text-tertiary)' : '#6b7280',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = theme === 'dark' ? 'var(--text-secondary)' : '#374151';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = theme === 'dark' ? 'var(--text-tertiary)' : '#6b7280';
+            }}
           >
             Clear chat
           </button>

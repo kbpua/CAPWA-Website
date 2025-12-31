@@ -6,8 +6,10 @@ import { reportService } from '../../services/reportService';
 import { UserManagement } from './UserManagement';
 import { AnalyticsPanel } from './AnalyticsPanel';
 import { IncidentDetailModal } from '../common/IncidentDetailModal';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const AdminDashboard: React.FC = () => {
+  const { theme } = useTheme();
   const [reports, setReports] = useState<IncidentReport[]>([]);
   const [filteredReports, setFilteredReports] = useState<IncidentReport[]>([]);
   const [loading, setLoading] = useState(true);
@@ -94,8 +96,18 @@ export const AdminDashboard: React.FC = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
-          <p className="mt-4 text-gray-700">Loading dashboard...</p>
+          <div 
+            className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto"
+            style={{
+              borderColor: theme === 'dark' ? '#6b8e23' : '#10b981',
+            }}
+          ></div>
+          <p 
+            className="mt-4"
+            style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#374151' }}
+          >
+            Loading dashboard...
+          </p>
         </div>
       </div>
     );
@@ -109,74 +121,209 @@ export const AdminDashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Statistics Panel */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-green-100 hover:shadow-xl transition-shadow">
+        <div 
+          className="rounded-xl shadow-lg p-6 border hover:shadow-xl transition-shadow"
+          style={{
+            backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+            borderColor: theme === 'dark' ? 'var(--border-color)' : '#d1fae5',
+          }}
+        >
           <div className="flex items-center">
-            <div className="flex-shrink-0 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl p-4 shadow-md">
-              <svg className="h-7 w-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div 
+              className="flex-shrink-0 rounded-xl p-4 shadow-md"
+              style={{
+                background: theme === 'dark'
+                  ? 'linear-gradient(to bottom right, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))'
+                  : 'linear-gradient(to bottom right, #d1fae5, #a7f3d0)',
+              }}
+            >
+              <svg 
+                className="h-7 w-7" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ color: theme === 'dark' ? '#6ee7b7' : '#059669' }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Total Reports</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.totalReports}</p>
+              <p 
+                className="text-sm font-medium"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+              >
+                Total Reports
+              </p>
+              <p 
+                className="text-2xl font-semibold"
+                style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+              >
+                {stats.totalReports}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-red-100 hover:shadow-xl transition-shadow">
+        <div 
+          className="rounded-xl shadow-lg p-6 border hover:shadow-xl transition-shadow"
+          style={{
+            backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+            borderColor: theme === 'dark' ? 'var(--border-color)' : '#fecaca',
+          }}
+        >
           <div className="flex items-center">
-            <div className="flex-shrink-0 bg-gradient-to-br from-red-100 to-pink-100 rounded-xl p-4 shadow-md">
-              <svg className="h-7 w-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div 
+              className="flex-shrink-0 rounded-xl p-4 shadow-md"
+              style={{
+                background: theme === 'dark'
+                  ? 'linear-gradient(to bottom right, rgba(220, 38, 38, 0.2), rgba(244, 63, 94, 0.2))'
+                  : 'linear-gradient(to bottom right, #fee2e2, #fce7f3)',
+              }}
+            >
+              <svg 
+                className="h-7 w-7" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ color: theme === 'dark' ? '#fca5a5' : '#dc2626' }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Critical</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.criticalReports}</p>
+              <p 
+                className="text-sm font-medium"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+              >
+                Critical
+              </p>
+              <p 
+                className="text-2xl font-semibold"
+                style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+              >
+                {stats.criticalReports}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-100 hover:shadow-xl transition-shadow">
+        <div 
+          className="rounded-xl shadow-lg p-6 border hover:shadow-xl transition-shadow"
+          style={{
+            backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+            borderColor: theme === 'dark' ? 'var(--border-color)' : '#bfdbfe',
+          }}
+        >
           <div className="flex items-center">
-            <div className="flex-shrink-0 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl p-4 shadow-md">
-              <svg className="h-7 w-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div 
+              className="flex-shrink-0 rounded-xl p-4 shadow-md"
+              style={{
+                background: theme === 'dark'
+                  ? 'linear-gradient(to bottom right, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2))'
+                  : 'linear-gradient(to bottom right, #dbeafe, #cffafe)',
+              }}
+            >
+              <svg 
+                className="h-7 w-7" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ color: theme === 'dark' ? '#93c5fd' : '#2563eb' }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">New</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.newReports}</p>
+              <p 
+                className="text-sm font-medium"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+              >
+                New
+              </p>
+              <p 
+                className="text-2xl font-semibold"
+                style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+              >
+                {stats.newReports}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6 border border-green-100 hover:shadow-xl transition-shadow">
+        <div 
+          className="rounded-xl shadow-lg p-6 border hover:shadow-xl transition-shadow"
+          style={{
+            backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+            borderColor: theme === 'dark' ? 'var(--border-color)' : '#d1fae5',
+          }}
+        >
           <div className="flex items-center">
-            <div className="flex-shrink-0 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl p-4 shadow-md">
-              <svg className="h-7 w-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div 
+              className="flex-shrink-0 rounded-xl p-4 shadow-md"
+              style={{
+                background: theme === 'dark'
+                  ? 'linear-gradient(to bottom right, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))'
+                  : 'linear-gradient(to bottom right, #d1fae5, #a7f3d0)',
+              }}
+            >
+              <svg 
+                className="h-7 w-7" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ color: theme === 'dark' ? '#6ee7b7' : '#059669' }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">Resolved</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.resolvedReports}</p>
+              <p 
+                className="text-sm font-medium"
+                style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#6b7280' }}
+              >
+                Resolved
+              </p>
+              <p 
+                className="text-2xl font-semibold"
+                style={{ color: theme === 'dark' ? 'var(--text-primary)' : '#111827' }}
+              >
+                {stats.resolvedReports}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-        <div className="border-b border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50">
+      <div 
+        className="rounded-xl shadow-lg border overflow-hidden transition-colors duration-300"
+        style={{
+          backgroundColor: theme === 'dark' ? 'var(--card-bg)' : '#ffffff',
+          borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+        }}
+      >
+        <div 
+          className="border-b"
+          style={{
+            borderColor: theme === 'dark' ? 'var(--border-color)' : '#e5e7eb',
+            background: theme === 'dark'
+              ? 'linear-gradient(to right, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1))'
+              : 'linear-gradient(to right, #f0fdf4, #d1fae5)',
+          }}
+        >
           <nav className="flex -mb-px">
             <button
               onClick={() => setActiveTab('reports')}
               className={`px-8 py-4 text-sm font-semibold border-b-3 transition-all ${
                 activeTab === 'reports'
-                  ? 'border-green-600 text-green-700 bg-white'
+                  ? theme === 'dark'
+                    ? 'border-[#6b8e23] text-[#6b8e23]'
+                    : 'border-green-600 text-green-700 bg-white'
+                  : theme === 'dark'
+                  ? 'border-transparent text-gray-400 hover:text-[#6b8e23] hover:bg-white/5'
                   : 'border-transparent text-gray-600 hover:text-green-600 hover:bg-white/50'
               }`}
+              style={activeTab === 'reports' && theme === 'dark' ? { backgroundColor: 'var(--card-bg)' } : {}}
             >
               📋 Reports
             </button>
@@ -184,9 +331,14 @@ export const AdminDashboard: React.FC = () => {
               onClick={() => setActiveTab('analytics')}
               className={`px-8 py-4 text-sm font-semibold border-b-3 transition-all ${
                 activeTab === 'analytics'
-                  ? 'border-green-600 text-green-700 bg-white'
+                  ? theme === 'dark'
+                    ? 'border-[#6b8e23] text-[#6b8e23]'
+                    : 'border-green-600 text-green-700 bg-white'
+                  : theme === 'dark'
+                  ? 'border-transparent text-gray-400 hover:text-[#6b8e23] hover:bg-white/5'
                   : 'border-transparent text-gray-600 hover:text-green-600 hover:bg-white/50'
               }`}
+              style={activeTab === 'analytics' && theme === 'dark' ? { backgroundColor: 'var(--card-bg)' } : {}}
             >
               📊 Analytics
             </button>
@@ -194,9 +346,14 @@ export const AdminDashboard: React.FC = () => {
               onClick={() => setActiveTab('users')}
               className={`px-8 py-4 text-sm font-semibold border-b-3 transition-all ${
                 activeTab === 'users'
-                  ? 'border-green-600 text-green-700 bg-white'
+                  ? theme === 'dark'
+                    ? 'border-[#6b8e23] text-[#6b8e23]'
+                    : 'border-green-600 text-green-700 bg-white'
+                  : theme === 'dark'
+                  ? 'border-transparent text-gray-400 hover:text-[#6b8e23] hover:bg-white/5'
                   : 'border-transparent text-gray-600 hover:text-green-600 hover:bg-white/50'
               }`}
+              style={activeTab === 'users' && theme === 'dark' ? { backgroundColor: 'var(--card-bg)' } : {}}
             >
               👥 Users
             </button>
@@ -207,13 +364,30 @@ export const AdminDashboard: React.FC = () => {
           {activeTab === 'reports' && (
             <>
               {/* Filters */}
-              <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+              <div 
+                className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl"
+                style={{
+                  background: theme === 'dark'
+                    ? 'linear-gradient(to right, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1))'
+                    : 'linear-gradient(to right, #f0fdf4, #d1fae5)',
+                }}
+              >
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                  <label 
+                    className="block text-sm font-medium mb-2"
+                    style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+                  >
+                    Type
+                  </label>
                   <select
                     value={typeFilter}
                     onChange={(e) => setTypeFilter(e.target.value as IncidentType | 'all')}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium bg-white transition-all"
+                    className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium transition-all"
+                    style={{
+                      backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                      borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                      color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                    }}
                   >
                     <option value="all">All Types</option>
                     <option value="abandoned">Abandoned</option>
@@ -225,11 +399,21 @@ export const AdminDashboard: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
+                  <label 
+                    className="block text-sm font-medium mb-2"
+                    style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+                  >
+                    Severity
+                  </label>
                   <select
                     value={severityFilter}
                     onChange={(e) => setSeverityFilter(e.target.value as SeverityLevel | 'all')}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium bg-white transition-all"
+                    className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium transition-all"
+                    style={{
+                      backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                      borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                      color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                    }}
                   >
                     <option value="all">All Severities</option>
                     <option value="low">Low</option>
@@ -239,11 +423,21 @@ export const AdminDashboard: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                  <label 
+                    className="block text-sm font-medium mb-2"
+                    style={{ color: theme === 'dark' ? 'var(--text-secondary)' : '#374151' }}
+                  >
+                    Status
+                  </label>
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value as IncidentStatus | 'all')}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium bg-white transition-all"
+                    className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 font-medium transition-all"
+                    style={{
+                      backgroundColor: theme === 'dark' ? 'var(--input-bg)' : '#ffffff',
+                      borderColor: theme === 'dark' ? 'var(--input-border)' : '#d1d5db',
+                      color: theme === 'dark' ? 'var(--input-text)' : '#111827',
+                    }}
                   >
                     <option value="all">All Statuses</option>
                     <option value="new">New</option>
@@ -254,7 +448,13 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mb-4 text-sm font-medium text-gray-600 bg-gray-50 rounded-lg px-4 py-2 inline-block">
+              <div 
+                className="mb-4 text-sm font-medium rounded-lg px-4 py-2 inline-block"
+                style={{
+                  color: theme === 'dark' ? 'var(--text-secondary)' : '#4b5563',
+                  backgroundColor: theme === 'dark' ? 'var(--bg-tertiary)' : '#f9fafb',
+                }}
+              >
                 Showing {filteredReports.length} of {reports.length} reports
               </div>
 
