@@ -38,7 +38,8 @@
     "tailwindcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
     "typescript": "~5.9.3",
-    "vite": "npm:rolldown-vite@7.2.5"
+    "vite": "npm:rolldown-vite@7.2.5",
+    "@rolldown/binding-linux-x64-gnu": "^1.0.0-beta.58"
   }
 }
 
