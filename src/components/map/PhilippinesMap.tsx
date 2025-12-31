@@ -14,6 +14,9 @@ const DEFAULT_ZOOM = 13;
 
 interface PhilippinesMapProps {
   onIncidentClick?: (incident: IncidentReport) => void;
+  refreshTrigger?: number; // Trigger to reload incidents
+  isDetailModalOpen?: boolean; // Track if detail modal is open
+  onReportFormStateChange?: (isOpen: boolean) => void; // Notify when report form opens/closes
 }
 
 // Component to handle map clicks
@@ -28,17 +31,25 @@ const MapClickHandler: React.FC<{ onMapClick: (location: Location) => void }> = 
   return null;
 };
 
-export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick }) => {
+export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick, refreshTrigger, isDetailModalOpen, onReportFormStateChange }) => {
   const [incidents, setIncidents] = useState<IncidentReport[]>([]);
   const [showReportForm, setShowReportForm] = useState(false);
   const [clickedLocation, setClickedLocation] = useState<Location | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
   const { location: userLocation } = useLocation();
   const { user } = useAuth();
 
   useEffect(() => {
     loadIncidents();
   }, []);
+
+  // Reload incidents when refreshTrigger changes
+  useEffect(() => {
+    if (refreshTrigger !== undefined && refreshTrigger > 0) {
+      loadIncidents();
+    }
+  }, [refreshTrigger]);
 
   const loadIncidents = async () => {
     try {
@@ -55,6 +66,9 @@ export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick 
   const handleMapClick = (location: Location) => {
     setClickedLocation(location);
     setShowReportForm(true);
+    if (onReportFormStateChange) {
+      onReportFormStateChange(true);
+    }
   };
 
   const handleFormSubmit = async (formData: {
@@ -75,6 +89,9 @@ export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick 
       });
       setShowReportForm(false);
       setClickedLocation(null);
+      if (onReportFormStateChange) {
+        onReportFormStateChange(false);
+      }
       await loadIncidents();
     } catch (error) {
       console.error('Error submitting report:', error);
@@ -85,6 +102,9 @@ export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick 
   const handleFormCancel = () => {
     setShowReportForm(false);
     setClickedLocation(null);
+    if (onReportFormStateChange) {
+      onReportFormStateChange(false);
+    }
   };
 
   const handleMarkerClick = (incident: IncidentReport) => {
@@ -117,7 +137,7 @@ export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick 
         ))}
       </MapContainer>
 
-      <LocationDetector />
+      <LocationDetector isModalOpen={showReportForm || isDetailModalOpen || isEmergencyModalOpen} />
 
       {/* Loading State */}
       {loading && (
@@ -138,8 +158,8 @@ export const PhilippinesMap: React.FC<PhilippinesMapProps> = ({ onIncidentClick 
         />
       )}
 
-      {/* Emergency Button */}
-      {user && <EmergencyButton />}
+      {/* Emergency Button - Available to all users, including non-logged-in */}
+      <EmergencyButton onModalStateChange={setIsEmergencyModalOpen} />
     </div>
   );
 };

@@ -37,11 +37,11 @@ export const ChatbotWidget: React.FC = () => {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all flex items-center justify-center z-50 ring-4 ring-yellow-300/30 animate-pulse"
+        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all flex items-center justify-center z-50 ring-4 ring-yellow-300/30 animate-pulse"
         aria-label="Open chatbot"
       >
         <svg
-          className="w-6 h-6"
+          className="w-5 h-5 md:w-6 md:h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -58,34 +58,35 @@ export const ChatbotWidget: React.FC = () => {
   }
 
   return (
-      <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border-2 border-green-200 overflow-hidden">
+      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 w-[calc(100vw-2rem)] h-[calc(100vh-8rem)] max-w-sm md:max-w-md lg:max-w-96 md:h-[500px] lg:h-[600px] bg-white rounded-2xl shadow-2xl flex flex-col z-50 border-2 border-green-200 overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-4 flex items-center justify-between shadow-md">
+        <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-3 md:p-4 flex items-center justify-between shadow-md">
           <div>
-            <h3 className="font-bold text-lg">CAPWA Assistant</h3>
-            <p className="text-sm text-green-100">How can I help you today? 🐾</p>
+            <h3 className="font-bold text-base md:text-lg">CAPWA Assistant</h3>
+            <p className="text-xs md:text-sm text-green-100">How can I help you today? 🐾</p>
           </div>
         <button
           onClick={() => setIsOpen(false)}
-          className="text-white hover:text-gray-200"
+          className="text-white hover:text-gray-200 flex-shrink-0 ml-2"
           aria-label="Close chatbot"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
+      <div className="flex-1 overflow-y-auto p-3 md:p-4 bg-gray-50">
         {messages.length === 0 ? (
-          <div className="text-center text-gray-500 mt-8">
-            <p className="mb-4">👋 Hello! I'm here to help with animal emergencies in the Philippines.</p>
+          <div className="text-center text-gray-500 mt-4 md:mt-8">
+            <p className="mb-3 md:mb-4 text-sm md:text-base">👋 Hello! I'm here to help with animal emergencies in the Philippines.</p>
             <div className="space-y-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handleQuickAction('I found an injured animal')}
+                className="text-xs md:text-sm"
               >
                 🚑 Injured Animal
               </Button>
@@ -93,6 +94,7 @@ export const ChatbotWidget: React.FC = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => handleQuickAction('I need emergency contacts')}
+                className="text-xs md:text-sm"
               >
                 📞 Emergency Contacts
               </Button>
@@ -100,6 +102,7 @@ export const ChatbotWidget: React.FC = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => handleQuickAction('I found a stray animal')}
+                className="text-xs md:text-sm"
               >
                 🐾 Stray Animal
               </Button>
@@ -112,7 +115,7 @@ export const ChatbotWidget: React.FC = () => {
             ))}
             {loading && (
               <div className="flex justify-start mb-4">
-                <div className="bg-gray-100 rounded-lg px-4 py-2">
+                <div className="bg-gray-100 rounded-lg px-3 md:px-4 py-2">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -127,17 +130,17 @@ export const ChatbotWidget: React.FC = () => {
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t border-gray-200 bg-white rounded-b-lg">
+      <div className="p-3 md:p-4 border-t border-gray-200 bg-white rounded-b-lg">
         <form onSubmit={handleSend} className="flex space-x-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="flex-1 px-2 md:px-3 py-1.5 md:py-2 text-sm md:text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
             disabled={loading}
           />
-          <Button type="submit" variant="primary" disabled={loading || !input.trim()}>
+          <Button type="submit" variant="primary" disabled={loading || !input.trim()} className="text-xs md:text-sm px-3 md:px-4">
             Send
           </Button>
         </form>

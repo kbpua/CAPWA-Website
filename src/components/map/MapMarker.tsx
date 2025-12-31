@@ -51,43 +51,63 @@ export const MapMarker: React.FC<MapMarkerProps> = ({ incident, onClick }) => {
     }).format(date);
   };
 
+  const handleViewDetails = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClick?.(incident);
+  };
+
   return (
     <Marker
       position={[incident.location.lat, incident.location.lng]}
       icon={customIcon}
-      eventHandlers={{
-        click: () => onClick?.(incident),
-      }}
     >
-      <Popup>
-        <div className="p-2 min-w-[200px]">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold text-gray-900 capitalize">{incident.type}</span>
+      <Popup className="custom-popup" autoClose={false} closeOnClick={true}>
+        <div className="p-3 min-w-[240px] max-w-[280px]">
+          <div className="flex items-center justify-between mb-3">
+            <span className="font-bold text-gray-900 capitalize text-base">{incident.type}</span>
             <span
-              className={`px-2 py-1 text-xs font-medium rounded capitalize ${
+              className={`px-2.5 py-1 text-xs font-semibold rounded-full capitalize ${
                 incident.severity === 'critical'
-                  ? 'bg-red-100 text-red-800'
+                  ? 'bg-red-100 text-red-800 border border-red-200'
                   : incident.severity === 'high'
-                  ? 'bg-amber-100 text-amber-800'
+                  ? 'bg-amber-100 text-amber-800 border border-amber-200'
                   : incident.severity === 'medium'
-                  ? 'bg-blue-100 text-blue-800'
-                  : 'bg-green-100 text-green-800'
+                  ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                  : 'bg-green-100 text-green-800 border border-green-200'
               }`}
             >
               {incident.severity}
             </span>
           </div>
-          <p className="text-sm text-gray-600 mb-2 line-clamp-2">{incident.description}</p>
-          <div className="text-xs text-gray-500">
-            <p>Status: <span className="capitalize">{incident.status}</span></p>
-            <p>{formatDate(incident.timestamp)}</p>
+          
+          <p className="text-sm text-gray-700 mb-3 line-clamp-3 leading-relaxed">{incident.description}</p>
+          
+          <div className="space-y-1.5 mb-3 pb-3 border-b border-gray-200">
+            <div className="flex items-center text-xs text-gray-600">
+              <span className="font-medium mr-2">Status:</span>
+              <span className="capitalize text-gray-800">{incident.status}</span>
+            </div>
+            <div className="flex items-center text-xs text-gray-600">
+              <span className="font-medium mr-2">Reported:</span>
+              <span className="text-gray-800">{formatDate(incident.timestamp)}</span>
+            </div>
+            {incident.location.city && (
+              <div className="flex items-center text-xs text-gray-600">
+                <span className="font-medium mr-2">Location:</span>
+                <span className="text-gray-800">{incident.location.city}</span>
+              </div>
+            )}
           </div>
+          
           {onClick && (
             <button
-              className="mt-2 w-full text-xs text-emerald-600 hover:text-emerald-700 font-medium"
-              onClick={() => onClick(incident)}
+              onClick={handleViewDetails}
+              className="w-full px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-sm font-semibold rounded-lg hover:from-emerald-700 hover:to-green-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center justify-center gap-2"
             >
-              View Details →
+              <span>View Details</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           )}
         </div>

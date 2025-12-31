@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Instagram, Mail } from 'lucide-react';
 import { getEmergencyContacts } from '../../utils/emergencyContacts';
+import { useAuth } from '../auth/AuthContext';
 
 export const Footer: React.FC = () => {
   const emergencyContacts = getEmergencyContacts().slice(0, 3);
+  const { isAuthenticated } = useAuth();
 
   return (
     <footer className="bg-gradient-to-r from-green-700 to-emerald-700 text-white mt-auto">
@@ -64,12 +66,14 @@ export const Footer: React.FC = () => {
                   <span className="text-sm md:text-base">Report Incident</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/login" className="hover:text-yellow-300 transition-all duration-200 flex items-center group">
-                  <span className="mr-2 text-lg group-hover:scale-110 transition-transform">🔐</span> 
-                  <span className="text-sm md:text-base">Login</span>
-                </Link>
-              </li>
+              {!isAuthenticated && (
+                <li>
+                  <Link to="/login" className="hover:text-yellow-300 transition-all duration-200 flex items-center group">
+                    <span className="mr-2 text-lg group-hover:scale-110 transition-transform">🔐</span> 
+                    <span className="text-sm md:text-base">Login</span>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
           
